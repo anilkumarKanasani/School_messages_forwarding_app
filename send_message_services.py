@@ -24,9 +24,6 @@ def send_whatsapp_message(msg: str):
     None
     """
     try:
-        # Print the message
-        print(msg)
-
         # Send the WhatsApp message instantly
         pywhatkit.sendwhatmsg_instantly(
             phone_no=env("Phone_number"),  # The phone number to send the message to

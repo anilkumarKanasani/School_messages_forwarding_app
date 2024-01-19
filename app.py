@@ -21,9 +21,9 @@ if __name__ == "__main__":
             # Get the summary of the message body using OpenAI
             summary = get_open_ai_summary(body)
 
-            # Send the summary as a WhatsApp message
+            # Send the summary as a Telegram (or) WhatsApp message
             send_telegram_message(msg=summary)
-            send_whatsapp_message(msg=summary)
+            # send_whatsapp_message(msg=summary)
             
         # Print a success message
         print("All messages translated and sent!")

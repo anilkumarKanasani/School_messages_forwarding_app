@@ -18,7 +18,10 @@ env.read_env("./.env")
 
 # Define the scope for Google API
 # If modifying these scopes, delete the file token.json.
-SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
+SCOPES = [
+            "https://www.googleapis.com/auth/gmail.readonly",
+           "https://www.googleapis.com/auth/gmail.modify"
+           ]
 
 def get_service():
     """
@@ -80,6 +83,28 @@ def get_all_messages(service):
         print(f"An error occurred: {error}")
         return None
 
+def flag_message(service, msg_id):
+    """
+    Function to flag a message in Gmail.
+
+    Parameters:
+    service (googleapiclient.discovery.Resource): The Gmail API service instance.
+    msg_id (str): The ID of the message to flag.
+
+    Returns:
+    None
+    """
+    try:
+        service.users().messages().modify(
+            userId='me',
+            id=msg_id,
+            body={'addLabelIds': ['STARRED']}
+        ).execute()
+        print(f"Message with id: {msg_id} has been flagged.")
+    except HttpError as error:
+        print(f"An error occurred: {error}")
+
+
 def get_message_body(service, messages):
     """
     Function to get the body of each message.
@@ -101,6 +126,8 @@ def get_message_body(service, messages):
                     .execute()
             )
             if any(s in json.dumps(msg) for s in [env("SCHOOL_ADDRESS_1"), env("SCHOOL_ADDRESS_2")]):
+                flag_message(service, message['id'])
+                
                 payload = msg['payload']
 
                 try:
