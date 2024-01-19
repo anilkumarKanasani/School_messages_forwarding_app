@@ -19,9 +19,10 @@ env.read_env("./.env")
 # Define the scope for Google API
 # If modifying these scopes, delete the file token.json.
 SCOPES = [
-            "https://www.googleapis.com/auth/gmail.readonly",
-           "https://www.googleapis.com/auth/gmail.modify"
-           ]
+    "https://www.googleapis.com/auth/gmail.readonly",
+    "https://www.googleapis.com/auth/gmail.modify",
+]
+
 
 def get_service():
     """
@@ -53,20 +54,28 @@ def get_service():
 
     return service
 
+
 def get_all_messages(service):
     """
     Function to get all messages from the user's inbox.
 
     Parameters:
-    service (googleapiclient.discovery.Resource): The Gmail API service instance.
+    service (googleapiclient.discovery.Resource):
+            The Gmail API service instance.
 
     Returns:
-    list: A list of messages. Each message is a dictionary containing 'id' and 'threadId'.
+    list: A list of messages.
+    Each message is a dictionary containing 'id' and 'threadId'.
     """
     try:
         # Execute the request to get messages from the user's inbox
-        results = service.users().messages().list(userId="me", labelIds=["INBOX"]).execute()
-        
+        results = (
+            service.users()
+            .messages()
+            .list(userId="me", labelIds=["INBOX"])
+            .execute()
+        )
+
         # Extract the list of messages from the results
         messages = results.get("messages", [])
 
@@ -83,12 +92,14 @@ def get_all_messages(service):
         print(f"An error occurred: {error}")
         return None
 
+
 def flag_message(service, msg_id):
     """
     Function to flag a message in Gmail.
 
     Parameters:
-    service (googleapiclient.discovery.Resource): The Gmail API service instance.
+    service (googleapiclient.discovery.Resource):
+        The Gmail API service instance.
     msg_id (str): The ID of the message to flag.
 
     Returns:
@@ -96,9 +107,7 @@ def flag_message(service, msg_id):
     """
     try:
         service.users().messages().modify(
-            userId='me',
-            id=msg_id,
-            body={'addLabelIds': ['STARRED']}
+            userId="me", id=msg_id, body={"addLabelIds": ["STARRED"]}
         ).execute()
         print(f"Message with id: {msg_id} has been flagged.")
     except HttpError as error:
@@ -110,8 +119,11 @@ def get_message_body(service, messages):
     Function to get the body of each message.
 
     Parameters:
-    service (googleapiclient.discovery.Resource): The Gmail API service instance.
-    messages (list): A list of messages. Each message is a dictionary containing 'id' and 'threadId'.
+    service (googleapiclient.discovery.Resource):
+        The Gmail API service instance.
+    messages (list):
+        A list of messages. Each message is a
+        dictionary containing 'id' and 'threadId'.
 
     Returns:
     list: A list of message bodies.
@@ -120,26 +132,29 @@ def get_message_body(service, messages):
         all_messages = []
         for message in messages:
             msg = (
-                    service.users()
-                    .messages()
-                    .get(userId="me", id=message["id"])
-                    .execute()
+                service.users()
+                .messages()
+                .get(userId="me", id=message["id"])
+                .execute()
             )
-            if any(s in json.dumps(msg) for s in [env("SCHOOL_ADDRESS_1"), env("SCHOOL_ADDRESS_2")]):
-                flag_message(service, message['id'])
-                
-                payload = msg['payload']
+            if any(
+                s in json.dumps(msg)
+                for s in [env("SCHOOL_ADDRESS_1"), env("SCHOOL_ADDRESS_2")]
+            ):
+                flag_message(service, message["id"])
+
+                payload = msg["payload"]
 
                 try:
-                    data = payload['parts'][0]['body']['data']
+                    data = payload["parts"][0]["body"]["data"]
                     print("Without attachemnt")
-                except:
-                    data = payload['parts'][0]['parts'][0]['body']['data']
+                except KeyError:
+                    data = payload["parts"][0]["parts"][0]["body"]["data"]
                     print("With attachemnt")
 
-                data = data.replace("-","+").replace("_","/")
+                data = data.replace("-", "+").replace("_", "/")
                 decoded_data = base64.b64decode(data)
-                soup = BeautifulSoup(decoded_data , "lxml")
+                soup = BeautifulSoup(decoded_data, "lxml")
                 body = soup.body()
                 all_messages.append(body)
         return all_messages

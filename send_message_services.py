@@ -6,6 +6,7 @@ from environs import Env
 env = Env()
 env.read_env("./.env")
 
+
 def send_telegram_message(msg: str):
     """
     Function to send a Telegram message.
@@ -16,11 +17,14 @@ def send_telegram_message(msg: str):
     Returns:
     None
     """
-    
+
     TOKEN = env("TELEGRAM_TOKEN")
     chat_id = env("TELEGRAM_CHAT_ID")
 
-    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}"
-    response = requests.get(url)
+    url = (
+        f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+        f"?chat_id={chat_id}&text={msg}"
+    )
+    requests.get(url)
 
     print("!!!!!!!Message sent to telegram!!!!!!!")

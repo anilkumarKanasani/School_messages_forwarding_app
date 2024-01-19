@@ -1,5 +1,9 @@
 # Import necessary services from different modules
-from google_incoming_services import get_service, get_all_messages, get_message_body
+from google_incoming_services import (
+    get_service,
+    get_all_messages,
+    get_message_body,
+)
 from open_ai_services import get_open_ai_summary
 from send_message_services import send_telegram_message
 
@@ -10,7 +14,7 @@ if __name__ == "__main__":
 
     # Get all messages from the service
     messages = get_all_messages(service)
-    
+
     # Check if there are any messages
     if messages is not None:
         # Get the body of each message
@@ -27,6 +31,6 @@ if __name__ == "__main__":
 
             # Send the summary as a Telegram message
             send_telegram_message(msg=summary)
-            
+
         # Print a success message
         print("All messages translated and sent!")
