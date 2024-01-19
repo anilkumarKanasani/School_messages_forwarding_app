@@ -102,7 +102,14 @@ def get_message_body(service, messages):
             )
             if any(s in json.dumps(msg) for s in [env("SCHOOL_ADDRESS_1"), env("SCHOOL_ADDRESS_2")]):
                 payload = msg['payload']
-                data = payload['parts'][0]['body']['data']
+
+                try:
+                    data = payload['parts'][0]['body']['data']
+                    print("Without attachemnt")
+                except:
+                    data = payload['parts'][0]['parts'][0]['body']['data']
+                    print("With attachemnt")
+
                 data = data.replace("-","+").replace("_","/")
                 decoded_data = base64.b64decode(data)
                 soup = BeautifulSoup(decoded_data , "lxml")

@@ -1,7 +1,7 @@
 # Import necessary services from different modules
 from google_incoming_services import get_service, get_all_messages, get_message_body
 from open_ai_services import get_open_ai_summary
-from send_message_services import send_whatsapp_message
+from send_message_services import send_whatsapp_message, send_telegram_message
 
 # Main execution
 if __name__ == "__main__":
@@ -22,6 +22,7 @@ if __name__ == "__main__":
             summary = get_open_ai_summary(body)
 
             # Send the summary as a WhatsApp message
+            send_telegram_message(msg=summary)
             send_whatsapp_message(msg=summary)
             
         # Print a success message

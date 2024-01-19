@@ -1,5 +1,6 @@
 # Import necessary libraries
 import time
+import requests
 import pywhatkit
 import pyautogui
 from pynput.keyboard import Key, Controller
@@ -55,3 +56,23 @@ def send_whatsapp_message(msg: str):
     except Exception as e:
         # If an exception occurs, print the exception
         print(str(e))
+
+
+def send_telegram_message(msg: str):
+    """
+    Function to send a Telegram message.
+
+    Parameters:
+    msg (str): The message to send.
+
+    Returns:
+    None
+    """
+    
+    TOKEN = env("TELEGRAM_TOKEN")
+    chat_id = env("TELEGRAM_CHAT_ID")
+
+    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}"
+    response = requests.get(url)
+
+    print("!!!!!!!Message sent to telegram!!!!!!!")
