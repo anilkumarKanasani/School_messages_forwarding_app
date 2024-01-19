@@ -1,2 +1,28 @@
 [tool.black]
 line-length = 79
+
+[tool.poetry]
+name = "school-messages-forwarding-app-pacakge"
+version = "0.1.0"
+description = "All the packages which are requried for scholl_messages_forwarding"
+authors = ["anilkumarKanasani <anilkumar.kanasani@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flake8 = "7.0.0"
+black = "23.12.1"
+autopep8 = "2.0.4"
+google-api-python-client = "^2.114.0"
+google-auth-httplib2 = "^0.2.0"
+google-auth-oauthlib = "^1.2.0"
+beautifulsoup4 = "^4.12.3"
+lxml = "^5.1.0"
+openai = "^1.8.0"
+environs = "^10.3.0"
+requests = "^2.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

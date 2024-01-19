@@ -3,6 +3,8 @@ flake8==7.0.0
 black==23.12.1
 autopep8==2.0.4
 
+poetry==1.7.1
+
 # Google API Packages
 google-api-python-client==2.114.0
 google-auth-httplib2==0.2.0
