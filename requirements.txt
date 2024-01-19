@@ -3,13 +3,14 @@ google-api-python-client
 google-auth-httplib2
 google-auth-oauthlib
 
-
+# Scraping Packages
+beautifulsoup4
+lxml
 
 # OpenAI API Packages
 openai
 
 
 # other packages
-lxml
 environs
 requests
