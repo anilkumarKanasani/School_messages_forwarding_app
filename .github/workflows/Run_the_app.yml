@@ -31,9 +31,6 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Create config file
-      run: pwd && echo "${{ secrets.GAPI_TOKEN }}"
-
-    - name: Create config file
       run: echo "${{ secrets.GAPI_TOKEN }}" > token.json
 
     - name: Run the application
