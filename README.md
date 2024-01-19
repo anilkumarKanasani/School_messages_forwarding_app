@@ -16,7 +16,9 @@ The app uses environment variables to store sensitive data. You need to create a
 SCHOOL_ADDRESS_1 = <your school email address ending> ex: @zphs.com
 SCHOOL_ADDRESS_2 = <your school email address ending> ex: @loyola.com
 OPENAI_API_KEY = <your open AI api id>
-Phone_number = <your client phone number>
+
+TELEGRAM_TOKEN = <your telegram bot token>
+TELEGRAM_CHAT_ID = <your telegram chat id>
 ```
 
 ## Running the app
