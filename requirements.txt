@@ -3,15 +3,13 @@ google-api-python-client
 google-auth-httplib2
 google-auth-oauthlib
 
-lxml
+
 
 # OpenAI API Packages
 openai
 
-# pywhatkit Packages
-pywhatkit 
-pyautogui 
-pynput
 
+# other packages
+lxml
 environs
 requests
