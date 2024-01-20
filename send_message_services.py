@@ -20,8 +20,9 @@ def send_telegram_message(msg: str, backup: bool):
     """
 
     if backup:
-        TOKEN = env("BKP_TELEGRAM_TOKEN")
-        chat_id = env("BKP_TELEGRAM_CHAT_ID")
+        print("No new information")
+        #TOKEN = env("BKP_TELEGRAM_TOKEN")
+        #chat_id = env("BKP_TELEGRAM_CHAT_ID")
     else:
         TOKEN = env("TELEGRAM_TOKEN")
         chat_id = env("TELEGRAM_CHAT_ID")
