@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
         if len(message_bodies) == 0:
             # If no messages are found, print a message and return None
-            send_telegram_message(msg="No messages from school found today.")
+            send_telegram_message(msg="No messages from school found today.", backup=True)
 
         # Loop through each message body
         for body in message_bodies:
@@ -30,7 +30,7 @@ if __name__ == "__main__":
             summary = get_open_ai_summary(body)
 
             # Send the summary as a Telegram message
-            send_telegram_message(msg=summary)
+            send_telegram_message(msg=summary, backup=False)
 
         # Print a success message
         print("All messages translated and sent!")
