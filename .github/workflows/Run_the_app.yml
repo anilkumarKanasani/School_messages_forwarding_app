@@ -3,9 +3,10 @@ name: Run the applicaiton
 
 on:
   workflow_dispatch:
-    
+  
+  # https://crontab.guru/#0_19_*_*_*
   schedule:
-    - cron: '0 0 * * *' # Run every day at midnight 
+    - cron: '0 19 * * *' # Run every day at 8 PM germany time 
 
 jobs:
   Run-the-applicaiton:
