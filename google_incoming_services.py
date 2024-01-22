@@ -67,12 +67,14 @@ def get_all_messages(service):
     list: A list of messages.
     Each message is a dictionary containing 'id' and 'threadId'.
     """
+    query = "from:*@" + env("SCHOOL_ADDRESS_1") + " OR from:*@" + env("SCHOOL_ADDRESS_2") + " -is:starred"
+
     try:
         # Execute the request to get messages from the user's inbox
         results = (
             service.users()
             .messages()
-            .list(userId="me", labelIds=["INBOX"])
+            .list(userId="me", labelIds=["INBOX"], q=query)
             .execute()
         )
 
@@ -137,26 +139,24 @@ def get_message_body(service, messages):
                 .get(userId="me", id=message["id"])
                 .execute()
             )
-            if any(
-                s in json.dumps(msg)
-                for s in [env("SCHOOL_ADDRESS_1"), env("SCHOOL_ADDRESS_2")]
-            ):
-                flag_message(service, message["id"])
 
-                payload = msg["payload"]
+            flag_message(service, message["id"])
 
-                try:
-                    data = payload["parts"][0]["body"]["data"]
-                    print("Without attachemnt")
-                except KeyError:
-                    data = payload["parts"][0]["parts"][0]["body"]["data"]
-                    print("With attachemnt")
+            payload = msg["payload"]
 
-                data = data.replace("-", "+").replace("_", "/")
-                decoded_data = base64.b64decode(data)
-                soup = BeautifulSoup(decoded_data, "lxml")
-                body = soup.body()
-                all_messages.append(body)
+            try:
+                data = payload["parts"][0]["body"]["data"]
+                print("Without attachemnt")
+            except KeyError:
+                data = payload["parts"][0]["parts"][0]["body"]["data"]
+                print("With attachemnt")
+
+            data = data.replace("-", "+").replace("_", "/")
+            decoded_data = base64.b64decode(data)
+            soup = BeautifulSoup(decoded_data, "lxml")
+            body = soup.body()
+            all_messages.append(body)
+
         return all_messages
 
     except HttpError as error:
