@@ -15,8 +15,11 @@ if __name__ == "__main__":
     # Get all messages from the service
     messages = get_all_messages(service)
 
-    # Check if there are any messages
-    if messages is not None:
+    # Check if there is no new messages from school
+    if messages is None:
+        send_telegram_message(msg="No messages from school found today.", backup=True)
+
+    else:
         # Get the body of each message
         message_bodies = get_message_body(service, messages)
 
