@@ -144,18 +144,25 @@ def get_message_body(service, messages):
 
             payload = msg["payload"]
 
-            try:
-                data = payload["parts"][0]["body"]["data"]
-                print("Without attachemnt")
-            except KeyError:
-                data = payload["parts"][0]["parts"][0]["body"]["data"]
-                print("With attachemnt")
+            sub_part = payload["parts"][0]
+            data = None
+            counter = 0
+            
+            while not data:
+                if "data" in sub_part["body"].keys():
+                    data = sub_part["body"]["data"]
+                    print("Data found in " + str(counter) + " iterations.")
+                else:
+                    counter += 1
+                    if counter == 10: break
+                    sub_part = sub_part["parts"][0]
 
-            data = data.replace("-", "+").replace("_", "/")
-            decoded_data = base64.b64decode(data)
-            soup = BeautifulSoup(decoded_data, "lxml")
-            body = soup.body()
-            all_messages.append(body)
+            if data!=None:
+                data = data.replace("-", "+").replace("_", "/")
+                decoded_data = base64.b64decode(data)
+                soup = BeautifulSoup(decoded_data, "lxml")
+                body = soup.body()
+                all_messages.append(body)
 
         return all_messages
 

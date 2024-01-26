@@ -22,7 +22,7 @@ def get_open_ai_summary(text):
     """
     # Create a chat completion with the OpenAI API
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo-16k",  # The model to use
+        model=env("OPEN_AI_MODEL"),  # The model to use
         messages=[
             {
                 "role": "system",  # The role of the message
