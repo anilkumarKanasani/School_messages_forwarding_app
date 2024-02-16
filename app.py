@@ -12,6 +12,7 @@ from send_message_services import send_telegram_message
 if __name__ == "__main__":
     gold_price = get_gold_price()
     send_telegram_message(msg=gold_price, backup=True)
+    print("Gd message sent!")
 
     # Get the Google service
     service = get_service()
