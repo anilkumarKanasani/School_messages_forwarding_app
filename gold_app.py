@@ -4,11 +4,9 @@ from bs4 import BeautifulSoup
 def get_gold_price():
     url = "https://www.grtjewels.com/"
     page = requests.get(url)
+    print(page.status_code, page.reason, page.content[:100])
     soup = BeautifulSoup(page.content, "html.parser")
+    print(soup.prettify())
     rate_div = soup.find_all('div', class_='rate slide-rates')
     rate_text = rate_div[0].text
     return rate_text 
-
-
-if __name__ == "__main__":
-    print(get_gold_price())
