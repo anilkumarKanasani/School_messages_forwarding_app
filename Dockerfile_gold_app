@@ -17,7 +17,5 @@ COPY src/app.py ./app.py
 
 COPY src/utils/ ./utils
 
-EXPOSE 8801
-
 # command to run on container start
 CMD [ "python", "./app.py"]
