@@ -26,9 +26,11 @@ jobs:
         python-version: ${{ matrix.python-version }}
       
     - name: Create .env_gold_app file
-      run: echo "BKP_TELEGRAM_TOKEN=${{ secrets.BKP_TELEGRAM_TOKEN }}
+      run: echo "BKP_TELEGRAM_TOKEN=${{ secrets.BKP_TELEGRAM_TOKEN }} 
                  BKP_TELEGRAM_CHAT_ID=${{ secrets.BKP_TELEGRAM_CHAT_ID }}
                  app_mode=gold_app" > .env_gold_app
+            
+           cat .env_gold_app
 
 
     - name: Create .env_school_app file
@@ -38,6 +40,8 @@ jobs:
               TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
               TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}
               app_mode=school_app" > .env_school_app
+            
+            cat .env_school_app
     
     - name: Create config file
       run: echo "${{ secrets.GAPI_TOKEN }}" > token.json
