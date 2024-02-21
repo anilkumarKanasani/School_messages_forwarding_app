@@ -3,7 +3,7 @@
 FROM python:3.11
  
 # set the working directory in the container
-WORKDIR /src/gold_app
+WORKDIR /src
 
 # copy the requirements file into the container
 COPY requirements.txt ./requirements.txt
@@ -12,12 +12,7 @@ COPY requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # copy the current directory contents into the container at /usr/src/app
-COPY src/gold_app/ ./gold_app
-COPY src/app.py ./app.py
-
-COPY src/utils/ ./utils
-
-EXPOSE 8801
+COPY src/ .
 
 # command to run on container start
 CMD [ "python", "./app.py"]
