@@ -26,22 +26,24 @@ jobs:
         python-version: ${{ matrix.python-version }}
       
     - name: Create .env_gold_app file
-      run: echo "BKP_TELEGRAM_TOKEN=${{ secrets.BKP_TELEGRAM_TOKEN }} 
-                 BKP_TELEGRAM_CHAT_ID=${{ secrets.BKP_TELEGRAM_CHAT_ID }}
-                 app_mode=gold_app" > .env_gold_app
+      run: |
+        echo "BKP_TELEGRAM_TOKEN=${{ secrets.BKP_TELEGRAM_TOKEN }}" > .env_gold_app
+        echo "BKP_TELEGRAM_CHAT_ID=${{ secrets.BKP_TELEGRAM_CHAT_ID }}" > .env_gold_app
+        echo "app_mode=gold_app" > .env_gold_app
             
-           cat .env_gold_app
+        cat .env_gold_app
 
 
     - name: Create .env_school_app file
-      run: echo "SCHOOL_ADDRESS_1=${{ secrets.SCHOOL_ADDRESS_1 }}
-              SCHOOL_ADDRESS_2=${{ secrets.SCHOOL_ADDRESS_2 }}
-              OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
-              TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
-              TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}
-              app_mode=school_app" > .env_school_app
+      run: |
+        echo "SCHOOL_ADDRESS_1=${{ secrets.SCHOOL_ADDRESS_1 }}" > .env_school_app
+        echo "SCHOOL_ADDRESS_2=${{ secrets.SCHOOL_ADDRESS_2 }}" > .env_school_app
+        echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" > .env_school_app
+        echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" > .env_school_app
+        echo "TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}" > .env_school_app
+        echo "app_mode=school_app" > .env_school_app
             
-            cat .env_school_app
+        cat .env_school_app
     
     - name: Create config file
       run: echo "${{ secrets.GAPI_TOKEN }}" > token.json
