@@ -34,14 +34,21 @@ jobs:
     - name: Create config file
       run: echo "${{ secrets.GAPI_TOKEN }}" > token.json
 
-    - name: Run the application
+    - name: Run the school messages app
       env:
         SCHOOL_ADDRESS_1: ${{ secrets.SCHOOL_ADDRESS_1 }}
         SCHOOL_ADDRESS_2: ${{ secrets.SCHOOL_ADDRESS_2 }}
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        app_mode: school_app
+      run: |
+        python src/app.py
+
+    - name: Run the gold messages app
+      env:
         BKP_TELEGRAM_TOKEN: ${{ secrets.BKP_TELEGRAM_TOKEN }}
         BKP_TELEGRAM_CHAT_ID: ${{ secrets.BKP_TELEGRAM_CHAT_ID }}
+        app_mode: gold_app
       run: |
-        python app.py
+          python src/app.py

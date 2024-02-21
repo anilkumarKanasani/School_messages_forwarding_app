@@ -25,11 +25,13 @@ def send_telegram_message(msg: str, backup: bool):
     else:
         TOKEN = env("TELEGRAM_TOKEN")
         chat_id = env("TELEGRAM_CHAT_ID")
-
-    url = (
-        f"https://api.telegram.org/bot{TOKEN}/sendMessage"
-        f"?chat_id={chat_id}&text={msg}"
-    )
-    requests.get(url)
-
-    print("!!!!!!!Message sent to telegram!!!!!!!")
+    
+    response = requests.post(
+        url='https://api.telegram.org/bot{0}/{1}'.format(TOKEN, "sendMessage"),
+        data={'chat_id': chat_id, 'text': msg}
+            ).json()
+    
+    if response['ok']:
+        print("!!!!!!!Message sent to telegram!!!!!!!")
+    else:
+        print(response)
