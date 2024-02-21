@@ -53,8 +53,8 @@ jobs:
       run: docker pull anilkumarkanasani/messaging_app:latest
     
     - name: Run docker container as gold app
-      run: docker run -d --name gold_app anilkumarkanasani/messaging_app:latest --env-file .env_gold_app
+      run: docker run -d --name gold_app --env-file .env_gold_app anilkumarkanasani/messaging_app:latest
 
 
     - name: Run docker container as school app
-      run: docker run -d --name school_app anilkumarkanasani/messaging_app:latest --volume ./token.json:/src/token.json  --env-file .env_school_app
+      run: docker run -d --name school_app --volume ./token.json:/src/token.json --env-file .env_school_app anilkumarkanasani/messaging_app:latest
