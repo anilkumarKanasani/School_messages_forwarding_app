@@ -24,7 +24,7 @@ TELEGRAM_CHAT_ID = <your telegram chat id>
 ## Running the app
 To run the app, you need to run the following command in the terminal:
 ```
-python app.py
+python app.py 
 ```
 
 ## License
