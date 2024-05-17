@@ -1,11 +1,24 @@
 import requests
 from bs4 import BeautifulSoup
 
+# get todays date
+from datetime import date
+
+
 def get_gold_price():
-    url = "https://www.grtjewels.com/"
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"}
-    page = requests.get(url, headers=headers, verify=False, timeout=10)
-    soup = BeautifulSoup(page.content, "html.parser")
-    rate_div = soup.find_all('div', class_='rate slide-rates')
-    rate_text = rate_div[0].text
-    return rate_text 
+    url = 'https://www.indiagoldrate.co.in/'
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        gold_rate_tag = soup.find('th', text='22K Gold').find_next('td').find_next('td')
+        
+        if gold_rate_tag:
+            gold_rate = gold_rate_tag.text
+        else:
+            gold_rate = None
+    else:
+        gold_rate = None
+    print("Gold rate is: ", gold_rate)
+    return str(date.today()) + " gold rate is " + gold_rate 

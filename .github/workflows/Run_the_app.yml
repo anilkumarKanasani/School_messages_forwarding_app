@@ -51,5 +51,5 @@ jobs:
     - name: Run docker container as school app
       run: docker run --name school_app --volume ./token.json:/src/token.json --env-file .env_school_app anilkumarkanasani/messaging_app:latest
     
-    # - name: Run docker container as gold app
-    #   run: docker run --name gold_app --env-file .env_gold_app anilkumarkanasani/messaging_app:latest
+    - name: Run docker container as gold app
+      run: docker run --name gold_app --env-file .env_gold_app anilkumarkanasani/messaging_app:latest
