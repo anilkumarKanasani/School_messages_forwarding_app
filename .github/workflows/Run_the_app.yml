@@ -36,6 +36,7 @@ jobs:
       run: |
         echo "SCHOOL_ADDRESS_1=${{ secrets.SCHOOL_ADDRESS_1 }}" > .env_school_app
         echo "SCHOOL_ADDRESS_2=${{ secrets.SCHOOL_ADDRESS_2 }}" >> .env_school_app
+        echo "OPEN_AI_MODEL=${{ secrets.OPEN_AI_MODEL }}" >> .env_school_app
         echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env_school_app
         echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env_school_app
         echo "TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}" >> .env_school_app
