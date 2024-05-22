@@ -1,0 +1,28 @@
+name: school_info
+channels:
+  - conda-forge
+  - defaults
+  - anaconda
+dependencies:
+  - python=3.10
+  - pip=21.3.1
+  - jupyterlab=3.2.1
+  - pip:
+    - ipykernel
+    - jupyter
+    - pandas==1.4.2
+    - numpy==1.22.4
+    - gspread==5.12.4
+    - gspread-dataframe==3.3.1
+    - flake8==7.0.0
+    - black==23.12.1
+    - autopep8==2.0.4
+    - poetry==1.7.1
+    - google-api-python-client==2.114.0
+    - google-auth-httplib2==0.2.0
+    - google-auth-oauthlib==1.2.0
+    - beautifulsoup4==4.12.3
+    - lxml==5.1.0
+    - openai==1.8.0
+    - environs==10.3.0
+    - requests==2.31.0

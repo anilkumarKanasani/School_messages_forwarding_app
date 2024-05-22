@@ -10,6 +10,10 @@ google-api-python-client==2.114.0
 google-auth-httplib2==0.2.0
 google-auth-oauthlib==1.2.0
 
+# Google Sheets
+gspread==5.12.4
+gspread-dataframe==3.3.1
+
 # Scraping Packages
 beautifulsoup4==4.12.3
 lxml==5.1.0

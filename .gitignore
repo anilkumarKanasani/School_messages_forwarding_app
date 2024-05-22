@@ -162,4 +162,6 @@ cython_debug/
 
 .env
 credentials.json
+gsheet_credentials.json
+src/exp_tracking_app/gsheet_credentials.json
 token.json
