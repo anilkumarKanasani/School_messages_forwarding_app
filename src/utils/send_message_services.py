@@ -38,3 +38,10 @@ def send_telegram_message(msg: str, backup: bool):
         print("!!!!!!!Message sent to telegram!!!!!!!")
     else:
         print(response)
+
+def enter_gsheet_message(db_name: str, new_row: dict):
+    import gspread
+    gc = gspread.service_account(filename="./gsheet_credentials.json")
+    wk_sht = gc.open(db_name)
+    # add new row to wk_sht
+    wk_sht.worksheet("Writing_table").append_row(list(new_row.values()))

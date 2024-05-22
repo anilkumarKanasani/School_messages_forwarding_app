@@ -13,6 +13,27 @@ if __name__ == "__main__":
         send_telegram_message(msg=gold_price, backup=True)
         print("Gd message sent!")
 
+    elif app_mode == "exp_tracking_app":
+        from exp_tracking_app.all_exp_messages import get_all_messages
+        from utils.open_ai_services import get_open_ai_json
+        from utils.send_message_services import enter_gsheet_message
+
+        messages = get_all_messages()
+
+        for message in messages:
+
+            try:
+                mess_dict = get_open_ai_json(message)
+            except:
+                print(message +  " Error in converting to JSON.")
+                mess_dict = {}
+
+            
+            enter_gsheet_message(db_name = "Expenses_app_db", new_row= mess_dict)
+
+        # Print a success message
+        print(str(len(messages)) + "  expenses entered into gsheets!")            
+
     elif app_mode == "school_app":
         from school_app.google_incoming_services import (
                         get_service,

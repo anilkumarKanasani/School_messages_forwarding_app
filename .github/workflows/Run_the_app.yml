@@ -6,7 +6,7 @@ on:
   
   # https://crontab.guru/#0_19_*_*_*
   schedule:
-    - cron: '0 19 * * *' # Run every day at 8 PM germany time 
+    - cron: '0 5 * * *' # Run every day at 6 AM germany time 
 
 jobs:
   Run-the-applicaiton:
@@ -41,11 +41,20 @@ jobs:
         echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env_school_app
         echo "TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}" >> .env_school_app
         echo "app_mode=school_app" >> .env_school_app
-    
+
+    - name: Create .env_exp_track_app file
+      run: |
+        echo "OPEN_AI_MODEL=${{ secrets.OPEN_AI_MODEL }}" >> .env_exp_track_app
+        echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env_exp_track_app
+        echo "TELEGRAM_APP_ID=${{ secrets.TELEGRAM_APP_ID }}" >> .env_exp_track_app
+        echo "TELEGRAM_API_HASH=${{ secrets.TELEGRAM_API_HASH }}" >> .env_exp_track_app
+        echo "TELEGRAM_PHONE=${{ secrets.TELEGRAM_PHONE }}" >> .env_exp_track_app
+        echo "app_mode=exp_tracking_app" >> .env_exp_track_app
+
+
     - name: Create config file
       run: echo "${{ secrets.GAPI_TOKEN }}" > token.json
 
-    
     - name: Pull docker image
       run: docker pull anilkumarkanasani/messaging_app:latest
 
@@ -54,3 +63,22 @@ jobs:
     
     - name: Run docker container as gold app
       run: docker run --name gold_app --env-file .env_gold_app anilkumarkanasani/messaging_app:latest
+
+    - name: Create gsheet credential file
+      env:
+        GSHEET_CREDS_BASE64: ${{ secrets.GSHEET_CREDS_BASE64 }}
+      run: |
+        echo $GSHEET_CREDS_BASE64 | base64 --decode > gsheet_credentials.json
+
+    - name: Create telegram session file
+      env:
+        ANIL_TELEGRAM_SESSION_BASE64: ${{ secrets.ANIL_TELEGRAM_SESSION_BASE64 }}
+      run: |
+        echo $ANIL_TELEGRAM_SESSION_BASE64 | base64 --decode > anil_telegram.session
+
+    - name: Run docker container as exp track app
+      run: docker run --name exp_track_app \
+                --volume $(pwd)/gsheet_credentials.json:/src/gsheet_credentials.json \
+                --volume $(pwd)/anil_telegram.session:/src/anil_telegram.session \
+                --env-file .env_exp_track_app \
+                anilkumarkanasani/messaging_app:latest
