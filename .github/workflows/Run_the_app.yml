@@ -58,11 +58,11 @@ jobs:
     - name: Pull docker image
       run: docker pull anilkumarkanasani/messaging_app:latest
 
-    - name: Run docker container as school app
-      run: docker run --name school_app --volume ./token.json:/src/token.json --env-file .env_school_app anilkumarkanasani/messaging_app:latest
+    # - name: Run docker container as school app
+    #   run: docker run --name school_app --volume ./token.json:/src/token.json --env-file .env_school_app anilkumarkanasani/messaging_app:latest
     
-    - name: Run docker container as gold app
-      run: docker run --name gold_app --env-file .env_gold_app anilkumarkanasani/messaging_app:latest
+    # - name: Run docker container as gold app
+    #   run: docker run --name gold_app --env-file .env_gold_app anilkumarkanasani/messaging_app:latest
 
     - name: Create gsheet credential file
       env:
@@ -78,7 +78,7 @@ jobs:
     - name: check the files
       run: |
         ls -l
-        cat gsheets_credentials.json
+        cat ./gsheet_credentials.json
     - name: Run docker container as exp track app
       run: docker run --name exp_track_app \
                 --volume ./gsheet_credentials.json:/src/gsheet_credentials.json \
