@@ -75,10 +75,13 @@ jobs:
         ANIL_TELEGRAM_SESSION_BASE64: ${{ secrets.ANIL_TELEGRAM_SESSION_BASE64 }}
       run: |
         echo $ANIL_TELEGRAM_SESSION_BASE64 | base64 --decode > anil_telegram.session
-
+    - name: check the files
+      run: |
+        ls -l
+        cat gsheets_credentials.json
     - name: Run docker container as exp track app
       run: docker run --name exp_track_app \
-                --volume $(pwd)/gsheet_credentials.json:/src/gsheet_credentials.json \
-                --volume $(pwd)/anil_telegram.session:/src/anil_telegram.session \
+                --volume ./gsheet_credentials.json:/src/gsheet_credentials.json \
+                --volume ./anil_telegram.session:/src/anil_telegram.session \
                 --env-file .env_exp_track_app \
                 anilkumarkanasani/messaging_app:latest
