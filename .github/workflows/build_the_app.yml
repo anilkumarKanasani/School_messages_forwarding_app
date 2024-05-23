@@ -1,0 +1,29 @@
+name: Build the applicaiton
+
+on:
+    push:
+        branches:
+        - main
+
+jobs:
+    Build-the-applicaiton:
+        name: Build applicaiton
+        runs-on: ubuntu-latest
+
+    
+        steps:
+    
+        - uses: actions/checkout@v2
+        
+        - name: Login to DockerHub
+          uses: docker/login-action@v1
+          with:
+            username: ${{ secrets.DOCKER_HUB_USERNAME }}
+            password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}       
+        
+        - name: Push the docker image
+          uses: docker/build-push-action@v2
+          with:
+                context: .
+                push: true
+                tags: anilkumarkanasani/messaging_app:latest
