@@ -3,6 +3,7 @@ from utils.send_message_services import send_telegram_message
 
 
 import os
+import ast
 app_mode = os.getenv("app_mode")
 
 # Main execution
@@ -15,15 +16,13 @@ if __name__ == "__main__":
 
     elif app_mode == "exp_tracking_app":
         from exp_tracking_app.all_exp_messages import get_all_messages
-        from utils.open_ai_services import get_open_ai_json
         from utils.send_message_services import enter_gsheet_message
 
         messages = get_all_messages()
-
+        
         for message in messages:
-
             try:
-                mess_dict = get_open_ai_json(message)
+                mess_dict = ast.literal_eval(message.strip('"'))
             except:
                 print(message +  " Error in converting to JSON.")
                 mess_dict = {}
