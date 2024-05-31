@@ -23,6 +23,7 @@ if __name__ == "__main__":
         for message in messages:
             try:
                 mess_dict = ast.literal_eval(message.strip('"'))
+                mess_dict["amount"] = float(mess_dict["amount"])
             except:
                 print(message +  " Error in converting to JSON.")
                 mess_dict = {}
