@@ -2,8 +2,11 @@ name: Build the applicaiton
 
 on:
     push:
-        branches:
+      branches:
         - main
+      paths-ignore:
+        - 'README.md'
+        - '.github/workflows/*'
 
 jobs:
     Build-the-applicaiton:
