@@ -29,6 +29,8 @@ jobs:
       run: |
         echo "BKP_TELEGRAM_TOKEN=${{ secrets.BKP_TELEGRAM_TOKEN }}" > .env_gold_app
         echo "BKP_TELEGRAM_CHAT_ID=${{ secrets.BKP_TELEGRAM_CHAT_ID }}" >> .env_gold_app
+        echo "GOLD_QUESTION=${{ secrets.GOLD_QUESTION }}" >> .env_gold_app
+        echo "SERPAPI_API_KEY=${{ secrets.SERPAPI_API_KEY }}" >> .env_gold_app
         echo "app_mode=gold_app" >> .env_gold_app
 
 
