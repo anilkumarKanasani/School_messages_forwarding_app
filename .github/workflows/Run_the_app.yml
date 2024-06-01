@@ -52,8 +52,11 @@ jobs:
         echo "app_mode=exp_tracking_app" >> .env_exp_track_app
 
 
-    - name: Create config file
-      run: echo "${{ secrets.GAPI_TOKEN }}" > token.json
+    - name: Create gmail token file
+      env:
+        GMAIL_TOKEN_BASE64: ${{ secrets.GMAIL_TOKEN_BASE64 }}
+      run: |
+        echo $GMAIL_TOKEN_BASE64 | base64 --decode > token.json
 
     - name: Pull docker image
       run: docker pull anilkumarkanasani/messaging_app:latest
