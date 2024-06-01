@@ -1,24 +1,29 @@
-import requests
-from bs4 import BeautifulSoup
+from serpapi import GoogleSearch
+from environs import Env
 
-# get todays date
-from datetime import date
+env = Env()
+env.read_env("./.env")
 
+params = {
+    "engine": "google",
+    "google_domain": "google.com",
+    "gl": "in",
+    "hl": "en",
+    "q": env("GOLD_QUESTION"),
+    "api_key": env("SERPAPI_API_KEY")
+}
 
 def get_gold_price():
-    url = 'https://www.indiagoldrate.co.in/'
-    response = requests.get(url)
-
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.content, 'html.parser')
-
-        gold_rate_tag = soup.find('th', text='22K Gold').find_next('td').find_next('td')
-        
-        if gold_rate_tag:
-            gold_rate = gold_rate_tag.text
-        else:
-            gold_rate = None
-    else:
-        gold_rate = None
-    print("Gold rate is: ", gold_rate)
-    return str(date.today()) + " gold rate is " + gold_rate 
+    try:
+        search = GoogleSearch(params)
+        result = search.get_dict()
+        try:
+            return result["organic_results"][0]["snippet_highlighted_words"]
+        except:
+            try:
+                return result["organic_results"][0]["snippet"]
+            except:
+                return "Failed to extract the price"
+    except:
+        return "Failed to get the price"
+    
