@@ -18,12 +18,9 @@ def get_gold_price():
         search = GoogleSearch(params)
         result = search.get_dict()
         try:
-            return result["organic_results"][0]["snippet_highlighted_words"]
+            return result["organic_results"][0]["snippet"]
         except:
-            try:
-                return result["organic_results"][0]["snippet"]
-            except:
-                return "Failed to extract the price"
+            return "Failed to extract the price"
     except:
-        return "Failed to get the price"
+        return "Failed to get the access to site"
     

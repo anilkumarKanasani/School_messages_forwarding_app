@@ -10,8 +10,10 @@ app_mode = os.getenv("app_mode")
 if __name__ == "__main__":
     if app_mode == "gold_app":
         from gold_app.gold_app import get_gold_price
+        from utils.open_ai_services import get_open_ai_summary
         gold_price = get_gold_price()
-        send_telegram_message(msg=gold_price, backup=True)
+        message = get_open_ai_summary(gold_price, content="gd")
+        send_telegram_message(msg=message, backup=True)
         print("Gd message sent!")
 
     elif app_mode == "exp_tracking_app":
@@ -63,7 +65,7 @@ if __name__ == "__main__":
             for body in message_bodies:
                 # Get the summary of the message body using OpenAI
                 try:
-                    summary = get_open_ai_summary(body)
+                    summary = get_open_ai_summary(body, content="school")
                 except:
                     summary = body
 
