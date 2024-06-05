@@ -11,7 +11,7 @@ env.read_env("./.env")
 client = OpenAI()
 
 
-def get_open_ai_summary(text):
+def get_open_ai_summary(text,content="school"):
     """
     Function to get a summary of the provided text using OpenAI.
 
@@ -21,17 +21,25 @@ def get_open_ai_summary(text):
     Returns:
     str: The summary of the text.
     """
+    if content == "school":
+        formated_content = """Summarize content you are provided
+                            in short and straight in English.
+                            It can be as short as possible,
+                            but it should provide the complete
+                            idea of the content."""
+    elif content == "gd":
+        formated_content = """You will be provided with the
+                            price of gold in the snippet.
+                            Extract the price of 22 karats.
+                            If not found, return 
+                            Failed to extract the price by LLM."""
     # Create a chat completion with the OpenAI API
     response = client.chat.completions.create(
         model=env("OPEN_AI_MODEL"),  # The model to use
         messages=[
             {
                 "role": "system",  # The role of the message
-                "content": """Summarize content you are provided
-                            in short and straight in English.
-                            It can be as short as possible,
-                            but it should provide the complete
-                            idea of the content.""",
+                "content": formated_content,
             },
             {
                 "role": "user",  # The role of the message
