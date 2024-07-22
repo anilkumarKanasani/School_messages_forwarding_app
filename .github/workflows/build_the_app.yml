@@ -1,12 +1,12 @@
 name: Build the applicaiton
 
-# on:
-#     push:
-#       branches:
-#         - main
-#       paths-ignore:
-#         - 'README.md'
-#         - '.github/workflows/*'
+on:
+    push:
+      branches:
+        - main
+      paths-ignore:
+        - 'README.md'
+        - '.github/workflows/*'
 
 jobs:
     Build-the-applicaiton:
